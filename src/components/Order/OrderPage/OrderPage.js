@@ -13,24 +13,16 @@ const OrderPage = () => {
   const [loading, setLoading] = useState(false);
 
   const { user } = useContext(AuthContext);
-
-  // Fetch user orders from firestore
   const getOrders = async () => {
     setLoading(true);
     try {
       const docRef = doc(db, "userOrders", user.uid);
       const docSnap = await getDoc(docRef);
       const data = docSnap.data();
-
-      // Display error message if no orders found
       if (!data) {
         return toast.error("No Orders Found!");
       }
-
-      // Array to store promises
       let promiseArray = [];
-
-      // For each order call the getProductsUsingProductIds() and store the promise in the array
       data.orders.forEach((order) => {
         promiseArray.push(
           new Promise((resolve, reject) => {
