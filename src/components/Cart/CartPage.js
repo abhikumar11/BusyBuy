@@ -4,7 +4,7 @@ import AuthContext from "../../context/Auth/AuthContex";
 import { getProductById, getUserCartProducts } from '../utils/utils';
 import { toast } from 'react-toastify';
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../FirebaseConfig';
+import {db} from "../../FirebaseConfig"
 import ProductList from '../Product/ProductList/ProductList';
 import styles from "./cartpage.module.css";
 import Loader from "../UI/Loader/Loader";
