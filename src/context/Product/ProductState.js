@@ -3,29 +3,34 @@ import ProductContext from './ProductContext';
 import ProductReducer from './ProductReducer';
 import { SET_ERROR, SET_FILTERED_PRODUCTS, SET_PRODUCTS, TOGGLE_LOADING } from './ProductType';
 import { db } from '../../FirebaseConfig';
-import { collection, getDoc, query } from 'firebase/firestore';
+import { collection, getDoc, getDocs, query } from 'firebase/firestore';
+import { useEffect } from 'react';
 const ProductState = ({children}) => {
     const initialState ={
-        products:[],
-        carProducts:[],
-        filteredProducts:[],
-        loading:false,
-        error:""
+        loading: false,
+        products: [],
+        filteredProducts: [],
+        cartProducts: [],
+        error: "",
     }
-    const [state,dispatch] = useReducer(initialState,ProductReducer);
+   
+    
+    const [state,dispatch] = useReducer(ProductReducer,initialState);
     const getProducts=async()=>{
-            try {
-                dispatch({type:TOGGLE_LOADING});
-                const productRef=collection(db,"products");
-                const productSnapshot = await getDoc(query(productRef));
-                const productData=productSnapshot.docs.map((doc)=>({
-                    ...doc.data(),
-                }));
-                dispatch({type:SET_PRODUCTS,payload:productData});
-            } catch (error) {
-                dispatch({type:SET_ERROR,payload:error.message});
-            }
-    }
+       
+        try {
+            dispatch({ type: TOGGLE_LOADING });
+            const productsRef = collection(db, "products");
+            const productsSnapshot = await getDocs(query(productsRef));
+            const productsData = productsSnapshot.docs.map((doc) => ({
+              ...doc.data(),
+            }));
+      
+            dispatch({ type: SET_PRODUCTS, payload: productsData });
+          } catch (error) {
+            dispatch({ type: SET_ERROR, payload: error.message });
+          }
+    };
     const filterProduct=(filterobj)=>{
             const {searchQuery,priceRange,categories:{men,women,jewelery,electronics}}=filterobj;
             let items=state.products;

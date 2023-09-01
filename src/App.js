@@ -5,13 +5,14 @@ import HomePage from './components/Home/HomePage';
 import SignUpPage from './components/SignUp/SignUpPage';
 import LoginPage from './components/Login/LoginPage';
 import CartPage from './components/Cart/CartPage';
-import OrderPage from './components/Order/OrderPage';
+import OrderPage from './components/Order/OrderPage/OrderPage';
 import ErrorPage from './components/Error/ErrorPage';
 import {getAuth,onAuthStateChanged } from 'firebase/auth';
 import { useContext, useEffect } from 'react';
 import AuthContext from './context/Auth/AuthContex';
 import ProductContextProvider from './context/Product/ProductState';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
  
